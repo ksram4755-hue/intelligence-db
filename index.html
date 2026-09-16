@@ -32,485 +32,209 @@ body {
     linear-gradient(90deg, rgba(59,130,246,0.03) 1px, transparent 1px);
   background-size: 40px 40px;
 }
-
-/* شاشة التحميل */
 #loader {
-  position: fixed;
-  inset: 0;
-  background: #050a15;
-  z-index: 9999;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 20px;
-  transition: opacity 0.6s;
+  position: fixed; inset: 0; background: #050a15; z-index: 9999;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 20px; transition: opacity 0.6s;
 }
 #loader.hide { opacity: 0; pointer-events: none; }
 .loader-logo {
-  width: 80px; height: 80px;
-  border: 3px solid var(--accent);
-  border-top-color: transparent;
-  border-radius: 50%;
+  width: 80px; height: 80px; border: 3px solid var(--accent);
+  border-top-color: transparent; border-radius: 50%;
   animation: spin 1s linear infinite;
 }
 @keyframes spin { to { transform: rotate(360deg); } }
 .loader-text {
   font-family: 'JetBrains Mono', monospace;
-  color: var(--accent);
-  font-size: 0.9rem;
-  letter-spacing: 2px;
-  animation: blink 1.2s infinite;
+  color: var(--accent); font-size: 0.9rem;
+  letter-spacing: 2px; animation: blink 1.2s infinite;
 }
 @keyframes blink { 50% { opacity: 0.3; } }
-.loader-bar {
-  width: 240px; height: 3px;
-  background: rgba(59,130,246,0.2);
-  border-radius: 3px;
-  overflow: hidden;
-}
+.loader-bar { width: 240px; height: 3px; background: rgba(59,130,246,0.2); border-radius: 3px; overflow: hidden; }
 .loader-bar::after {
-  content: '';
-  display: block;
-  width: 40%; height: 100%;
-  background: var(--accent);
-  animation: loading 1.5s ease-in-out infinite;
+  content: ''; display: block; width: 40%; height: 100%;
+  background: var(--accent); animation: loading 1.5s ease-in-out infinite;
 }
 @keyframes loading {
   0% { transform: translateX(-100%); }
   100% { transform: translateX(350%); }
 }
-
-.container {
-  max-width: 1400px;
-  margin: 0 auto;
-  padding: 20px;
-}
-
-/* هيدر */
+.container { max-width: 1400px; margin: 0 auto; padding: 20px; }
 header {
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-top: 4px solid var(--accent);
-  border-radius: 12px;
-  padding: 24px;
-  margin-bottom: 24px;
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-top: 4px solid var(--accent); border-radius: 12px;
+  padding: 24px; margin-bottom: 24px;
   box-shadow: 0 4px 30px rgba(0,0,0,0.4);
 }
 .header-top {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 16px;
-  padding-bottom: 16px;
-  border-bottom: 1px solid var(--border);
-  margin-bottom: 16px;
+  display: flex; justify-content: space-between; align-items: center;
+  flex-wrap: wrap; gap: 16px; padding-bottom: 16px;
+  border-bottom: 1px solid var(--border); margin-bottom: 16px;
 }
-.logo-title {
-  display: flex; align-items: center; gap: 14px;
-}
+.logo-title { display: flex; align-items: center; gap: 14px; }
 .logo-icon {
   width: 50px; height: 50px;
   background: linear-gradient(135deg, var(--accent), var(--purple));
-  border-radius: 10px;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 1.6rem;
-  box-shadow: 0 0 20px rgba(59,130,246,0.5);
+  border-radius: 10px; display: flex; align-items: center; justify-content: center;
+  font-size: 1.6rem; box-shadow: 0 0 20px rgba(59,130,246,0.5);
 }
-h1 {
-  font-size: 1.4rem;
-  color: #fff;
-  letter-spacing: -0.3px;
-}
-.subtitle {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.75rem;
-  color: var(--text-dim);
-  letter-spacing: 1px;
-}
+h1 { font-size: 1.4rem; color: #fff; letter-spacing: -0.3px; }
+.subtitle { font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: var(--text-dim); letter-spacing: 1px; }
 .status-badge {
-  background: rgba(5,150,105,0.15);
-  border: 1px solid var(--green);
-  color: var(--green);
-  padding: 6px 14px;
-  border-radius: 6px;
-  font-weight: 700;
-  font-size: 0.8rem;
-  font-family: 'JetBrains Mono', monospace;
+  background: rgba(5,150,105,0.15); border: 1px solid var(--green);
+  color: var(--green); padding: 6px 14px; border-radius: 6px;
+  font-weight: 700; font-size: 0.8rem; font-family: 'JetBrains Mono', monospace;
 }
-
-/* إحصائيات */
-.metrics {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-  gap: 12px;
-}
+.metrics { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; }
 .metric {
-  background: var(--bg);
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  padding: 12px 16px;
-  text-align: center;
+  background: var(--bg); border: 1px solid var(--border);
+  border-radius: 8px; padding: 12px 16px; text-align: center;
 }
-.metric-value {
-  font-size: 1.6rem;
-  font-weight: 800;
-  font-family: 'JetBrains Mono', monospace;
-  color: var(--accent);
-}
-.metric-label {
-  font-size: 0.75rem;
-  color: var(--text-dim);
-  font-weight: 600;
-}
-
-/* أدوات البحث */
-.toolbar {
-  display: flex;
-  gap: 10px;
-  margin-bottom: 24px;
-  flex-wrap: wrap;
-}
-.search-box {
-  flex: 1;
-  min-width: 200px;
-  position: relative;
-}
+.metric-value { font-size: 1.6rem; font-weight: 800; font-family: 'JetBrains Mono', monospace; color: var(--accent); }
+.metric-label { font-size: 0.75rem; color: var(--text-dim); font-weight: 600; }
+.toolbar { display: flex; gap: 10px; margin-bottom: 24px; flex-wrap: wrap; }
+.search-box { flex: 1; min-width: 200px; position: relative; }
 .search-box input {
-  width: 100%;
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  padding: 12px 16px;
-  color: #fff;
-  font-family: inherit;
-  font-size: 0.9rem;
+  width: 100%; background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: 8px; padding: 12px 16px; color: #fff;
+  font-family: inherit; font-size: 0.9rem;
 }
 .search-box input:focus {
-  outline: none;
-  border-color: var(--accent);
+  outline: none; border-color: var(--accent);
   box-shadow: 0 0 0 3px rgba(59,130,246,0.15);
 }
-
-/* فلاتر */
-.filters {
-  display: flex;
-  gap: 8px;
-  flex-wrap: wrap;
-  margin-bottom: 20px;
-}
+.filters { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 20px; }
 .filter-btn {
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  color: var(--text-dim);
-  padding: 8px 14px;
-  border-radius: 6px;
-  cursor: pointer;
-  font-family: inherit;
-  font-size: 0.82rem;
-  font-weight: 700;
-  transition: all 0.2s;
+  background: var(--bg-card); border: 1px solid var(--border);
+  color: var(--text-dim); padding: 8px 14px; border-radius: 6px;
+  cursor: pointer; font-family: inherit; font-size: 0.82rem;
+  font-weight: 700; transition: all 0.2s;
 }
 .filter-btn:hover { color: #fff; border-color: var(--accent); }
-.filter-btn.active {
-  background: var(--accent);
-  color: #fff;
-  border-color: var(--accent);
-}
-
-/* شبكة الكروت */
-.grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-  gap: 18px;
-}
-
-/* كارت شخص */
+.filter-btn.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 18px; }
 .card {
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 18px;
-  cursor: pointer;
-  transition: all 0.3s;
-  position: relative;
-  overflow: hidden;
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: 12px; padding: 18px; cursor: pointer;
+  transition: all 0.3s; position: relative; overflow: hidden;
 }
 .card::before {
-  content: '';
-  position: absolute;
-  top: 0; right: 0;
-  width: 3px; height: 100%;
-  background: var(--accent);
-  transition: width 0.3s;
+  content: ''; position: absolute; top: 0; right: 0;
+  width: 3px; height: 100%; background: var(--accent); transition: width 0.3s;
 }
-.card:hover {
-  transform: translateY(-4px);
-  border-color: var(--accent);
-  box-shadow: 0 10px 30px rgba(59,130,246,0.2);
-}
+.card:hover { transform: translateY(-4px); border-color: var(--accent); box-shadow: 0 10px 30px rgba(59,130,246,0.2); }
 .card:hover::before { width: 5px; }
 .card.cat-target::before { background: var(--gold); }
 .card.cat-ally::before { background: var(--accent); }
 .card.cat-adversary::before { background: var(--red); }
 .card.cat-family::before { background: var(--green); }
 .card.cat-telegram::before { background: var(--purple); }
-
-.card-head {
-  display: flex;
-  gap: 12px;
-  margin-bottom: 12px;
-  align-items: flex-start;
-}
+.card-head { display: flex; gap: 12px; margin-bottom: 12px; align-items: flex-start; }
 .card-avatar {
-  width: 60px; height: 60px;
-  border-radius: 8px;
-  background: var(--bg);
-  border: 1px solid var(--border);
-  object-fit: cover;
-  flex-shrink: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.5rem;
-  color: var(--text-dim);
+  width: 60px; height: 60px; border-radius: 8px;
+  background: var(--bg); border: 1px solid var(--border);
+  object-fit: cover; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.5rem; color: var(--text-dim);
 }
 .card-info { flex: 1; min-width: 0; }
-.card-code {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.7rem;
-  color: var(--text-dim);
-}
-.card-name {
-  font-size: 1.05rem;
-  font-weight: 800;
-  color: #fff;
-  margin: 2px 0;
-  word-break: break-word;
-}
-.card-name-ar {
-  font-size: 0.82rem;
-  color: var(--text-dim);
-}
-.card-role {
-  font-size: 0.82rem;
-  color: var(--text-dim);
-  margin-top: 8px;
-  line-height: 1.5;
-}
-
+.card-code { font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; color: var(--text-dim); }
+.card-name { font-size: 1.05rem; font-weight: 800; color: #fff; margin: 2px 0; word-break: break-word; }
+.card-name-ar { font-size: 0.82rem; color: var(--text-dim); }
+.card-role { font-size: 0.82rem; color: var(--text-dim); margin-top: 8px; line-height: 1.5; }
 .badge {
-  display: inline-block;
-  padding: 3px 8px;
-  border-radius: 4px;
-  font-size: 0.7rem;
-  font-weight: 800;
-  font-family: 'JetBrains Mono', monospace;
-  margin-top: 6px;
+  display: inline-block; padding: 3px 8px; border-radius: 4px;
+  font-size: 0.7rem; font-weight: 800;
+  font-family: 'JetBrains Mono', monospace; margin-top: 6px;
 }
 .badge-safe { background: rgba(5,150,105,0.15); color: var(--green); border: 1px solid var(--green); }
 .badge-watch { background: rgba(217,119,6,0.15); color: var(--gold); border: 1px solid var(--gold); }
 .badge-danger { background: rgba(220,38,38,0.15); color: var(--red); border: 1px solid var(--red); }
 .badge-missing { background: rgba(100,116,139,0.2); color: #94a3b8; border: 1px solid #64748b; }
-
-/* مودال */
 .modal-overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.85);
-  backdrop-filter: blur(6px);
-  z-index: 1000;
-  display: none;
-  align-items: center;
-  justify-content: center;
-  padding: 16px;
+  position: fixed; inset: 0; background: rgba(0,0,0,0.85);
+  backdrop-filter: blur(6px); z-index: 1000; display: none;
+  align-items: center; justify-content: center; padding: 16px;
 }
 .modal-overlay.active { display: flex; }
 .modal {
-  background: var(--bg-card);
-  border: 1px solid var(--accent);
-  border-top: 4px solid var(--accent);
-  border-radius: 12px;
-  max-width: 800px;
-  width: 100%;
-  max-height: 90vh;
-  overflow-y: auto;
-  position: relative;
+  background: var(--bg-card); border: 1px solid var(--accent);
+  border-top: 4px solid var(--accent); border-radius: 12px;
+  max-width: 800px; width: 100%; max-height: 90vh;
+  overflow-y: auto; position: relative;
 }
 .modal-header {
-  padding: 18px 22px;
-  border-bottom: 1px solid var(--border);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  position: sticky;
-  top: 0;
-  background: var(--bg-card);
-  z-index: 2;
+  padding: 18px 22px; border-bottom: 1px solid var(--border);
+  display: flex; justify-content: space-between; align-items: center;
+  position: sticky; top: 0; background: var(--bg-card); z-index: 2;
 }
-.modal-header h2 {
-  font-size: 1.15rem;
-  color: #fff;
-}
+.modal-header h2 { font-size: 1.15rem; color: #fff; }
 .close-btn {
-  background: transparent;
-  border: 1px solid var(--border);
-  color: var(--text);
-  width: 34px; height: 34px;
-  border-radius: 6px;
-  cursor: pointer;
-  font-size: 1.1rem;
+  background: transparent; border: 1px solid var(--border);
+  color: var(--text); width: 34px; height: 34px;
+  border-radius: 6px; cursor: pointer; font-size: 1.1rem;
 }
 .close-btn:hover { background: var(--red); border-color: var(--red); }
 .modal-body { padding: 22px; }
-
 .section {
-  background: var(--bg);
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  padding: 16px;
-  margin-bottom: 14px;
+  background: var(--bg); border: 1px solid var(--border);
+  border-radius: 8px; padding: 16px; margin-bottom: 14px;
 }
 .section h3 {
-  color: var(--accent);
-  font-size: 0.95rem;
-  margin-bottom: 12px;
-  padding-bottom: 8px;
+  color: var(--accent); font-size: 0.95rem;
+  margin-bottom: 12px; padding-bottom: 8px;
   border-bottom: 1px solid var(--border);
 }
-.info-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 10px;
-}
-.info-item {
-  font-size: 0.85rem;
-}
-.info-label {
-  color: var(--text-dim);
-  font-size: 0.75rem;
-  font-weight: 700;
-  margin-bottom: 2px;
-}
-.info-value {
-  color: #fff;
-  font-family: 'JetBrains Mono', monospace;
-  word-break: break-word;
-}
-
-/* البيانات السرية */
+.info-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; }
+.info-item { font-size: 0.85rem; }
+.info-label { color: var(--text-dim); font-size: 0.75rem; font-weight: 700; margin-bottom: 2px; }
+.info-value { color: #fff; font-family: 'JetBrains Mono', monospace; word-break: break-word; }
 .secret-locked {
   background: linear-gradient(135deg, rgba(220,38,38,0.1), rgba(0,0,0,0.3));
-  border: 2px dashed var(--red);
-  border-radius: 8px;
-  padding: 30px;
-  text-align: center;
-  cursor: pointer;
-  transition: all 0.3s;
-  margin-bottom: 14px;
+  border: 2px dashed var(--red); border-radius: 8px;
+  padding: 30px; text-align: center; cursor: pointer;
+  transition: all 0.3s; margin-bottom: 14px;
 }
 .secret-locked:hover {
   background: linear-gradient(135deg, rgba(220,38,38,0.2), rgba(0,0,0,0.4));
   border-style: solid;
 }
-.secret-locked-icon {
-  font-size: 2.5rem;
-  margin-bottom: 10px;
-}
+.secret-locked-icon { font-size: 2.5rem; margin-bottom: 10px; }
 .secret-locked-text {
-  color: var(--red);
-  font-weight: 800;
-  font-family: 'JetBrains Mono', monospace;
-  letter-spacing: 1px;
+  color: var(--red); font-weight: 800;
+  font-family: 'JetBrains Mono', monospace; letter-spacing: 1px;
 }
-
-/* شاشة كلمة السر */
 .pass-overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(5,10,21,0.98);
-  z-index: 2000;
-  display: none;
-  align-items: center;
-  justify-content: center;
-  padding: 20px;
+  position: fixed; inset: 0; background: rgba(5,10,21,0.98);
+  z-index: 2000; display: none; align-items: center; justify-content: center; padding: 20px;
 }
 .pass-overlay.active { display: flex; }
 .pass-box {
-  background: #0a1020;
-  border: 2px solid var(--red);
-  border-radius: 12px;
-  padding: 30px;
-  max-width: 400px;
-  width: 100%;
-  text-align: center;
-  box-shadow: 0 0 60px rgba(220,38,38,0.4);
+  background: #0a1020; border: 2px solid var(--red);
+  border-radius: 12px; padding: 30px; max-width: 400px;
+  width: 100%; text-align: center; box-shadow: 0 0 60px rgba(220,38,38,0.4);
 }
-.pass-box h3 {
-  color: var(--red);
-  font-family: 'JetBrains Mono', monospace;
-  letter-spacing: 2px;
-  margin-bottom: 20px;
-}
+.pass-box h3 { color: var(--red); font-family: 'JetBrains Mono', monospace; letter-spacing: 2px; margin-bottom: 20px; }
 .pass-box input {
-  width: 100%;
-  background: #050a15;
-  border: 1px solid var(--red);
-  color: var(--red);
-  padding: 14px;
-  border-radius: 8px;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 1.1rem;
-  text-align: center;
-  letter-spacing: 3px;
-  margin-bottom: 12px;
+  width: 100%; background: #050a15; border: 1px solid var(--red);
+  color: var(--red); padding: 14px; border-radius: 8px;
+  font-family: 'JetBrains Mono', monospace; font-size: 1.1rem;
+  text-align: center; letter-spacing: 3px; margin-bottom: 12px;
 }
-.pass-box input:focus {
-  outline: none;
-  box-shadow: 0 0 0 3px rgba(220,38,38,0.3);
-}
+.pass-box input:focus { outline: none; box-shadow: 0 0 0 3px rgba(220,38,38,0.3); }
 .pass-box button {
-  width: 100%;
-  padding: 12px;
-  background: var(--red);
-  color: #fff;
-  border: none;
-  border-radius: 8px;
-  font-family: inherit;
-  font-weight: 800;
-  cursor: pointer;
-  font-size: 0.95rem;
+  width: 100%; padding: 12px; background: var(--red); color: #fff;
+  border: none; border-radius: 8px; font-family: inherit;
+  font-weight: 800; cursor: pointer; font-size: 0.95rem;
 }
-.pass-error {
-  color: var(--red);
-  font-size: 0.85rem;
-  margin-top: 8px;
-  display: none;
-}
-
-/* توست */
+.pass-error { color: var(--red); font-size: 0.85rem; margin-top: 8px; display: none; }
 .toast {
-  position: fixed;
-  bottom: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  background: var(--bg-card);
-  border: 1px solid var(--green);
-  color: #fff;
-  padding: 12px 20px;
-  border-radius: 8px;
-  font-weight: 700;
-  z-index: 9999;
-  display: none;
+  position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
+  background: var(--bg-card); border: 1px solid var(--green); color: #fff;
+  padding: 12px 20px; border-radius: 8px; font-weight: 700;
+  z-index: 9999; display: none;
 }
-
-.empty {
-  text-align: center;
-  padding: 60px 20px;
-  color: var(--text-dim);
-}
-
+.empty { text-align: center; padding: 60px 20px; color: var(--text-dim); }
 @media (max-width: 600px) {
   .grid { grid-template-columns: 1fr; }
   h1 { font-size: 1.1rem; }
@@ -520,19 +244,17 @@ h1 {
 </head>
 <body>
 
-<!-- شاشة التحميل -->
 <div id="loader">
   <div class="loader-logo"></div>
   <div class="loader-text">INITIALIZING SECURE CONNECTION...</div>
   <div class="loader-bar"></div>
 </div>
 
-<!-- شاشة كلمة السر -->
 <div class="pass-overlay" id="passOverlay">
   <div class="pass-box">
     <h3>🔒 ACCESS RESTRICTED</h3>
     <input type="password" id="passInput" placeholder="أدخل رمز التصريح" autocomplete="off">
-    <button onclick="checkPassword()">تحقق</button>
+    <button id="passBtn">تحقق</button>
     <div class="pass-error" id="passError">✗ تصريح مرفوض - تم تسجيل المحاولة</div>
   </div>
 </div>
@@ -554,7 +276,7 @@ h1 {
 
   <div class="toolbar">
     <div class="search-box">
-      <input type="text" id="searchInput" placeholder="🔍 بحث بالاسم، الكود، الدور، الهاتف..." oninput="filterData()">
+      <input type="text" id="searchInput" placeholder="🔍 بحث بالاسم، الكود، الدور، الهاتف...">
     </div>
   </div>
 
@@ -562,11 +284,11 @@ h1 {
   <div class="grid" id="grid"></div>
 </div>
 
-<div class="modal-overlay" id="modal" onclick="closeModal(event)">
-  <div class="modal" onclick="event.stopPropagation()">
+<div class="modal-overlay" id="modal">
+  <div class="modal">
     <div class="modal-header">
       <h2 id="modalTitle">-</h2>
-      <button class="close-btn" onclick="closeModal()">✕</button>
+      <button class="close-btn" id="closeModalBtn">✕</button>
     </div>
     <div class="modal-body" id="modalBody"></div>
   </div>
@@ -590,51 +312,70 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-// ⚙️ كلمة السر السرية (تتغير من لوحة التحكم لاحقًا)
 const SECRET_PASSWORD = "ofa";
-
 let allData = [];
 let currentFilter = 'all';
 let secretUnlocked = false;
+let pendingUnlockId = null;
 
-// ===== تحميل البيانات =====
+const $ = id => document.getElementById(id);
+
+/* ===== Helpers ===== */
+function escapeHTML(v) {
+  return String(v ?? "")
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+}
+
+function toast(msg) {
+  const t = $("toast");
+  if (!t) return;
+  t.textContent = msg;
+  t.style.display = 'block';
+  setTimeout(() => { t.style.display = 'none'; }, 2000);
+}
+
+/* ===== Load Data ===== */
 async function loadData() {
   try {
     const snap = await getDocs(collection(db, "persons"));
     allData = snap.docs.map(d => ({ id: d.id, ...d.data() }));
-    allData.sort((a, b) => (a.code || '').localeCompare(b.code || ''));
-
+    allData.sort((a, b) => String(a.code || '').localeCompare(String(b.code || ''), undefined, { numeric: true }));
     renderMetrics();
     renderFilters();
     renderGrid(allData);
-
-    setTimeout(() => {
-      document.getElementById('loader').classList.add('hide');
-    }, 800);
+    setTimeout(() => { $('loader').classList.add('hide'); }, 800);
   } catch (e) {
     console.error(e);
-    document.getElementById('loader').innerHTML = `
+    $('loader').innerHTML = `
       <div style="color:#dc2626; font-family:monospace; text-align:center; padding:20px;">
         ⚠️ خطأ في الاتصال بقاعدة البيانات<br>
-        <span style="font-size:0.8rem; color:#94a3b8;">${e.message}</span>
+        <span style="font-size:0.8rem; color:#94a3b8;">${escapeHTML(e.message)}</span>
       </div>
     `;
   }
 }
 
+/* ===== Metrics ===== */
 function renderMetrics() {
   const counts = { target: 0, ally: 0, adversary: 0, family: 0, telegram: 0 };
-  allData.forEach(p => counts[p.category] = (counts[p.category] || 0) + 1);
-  
-  document.getElementById('metrics').innerHTML = `
+  allData.forEach(p => {
+    if (Object.prototype.hasOwnProperty.call(counts, p.category)) counts[p.category]++;
+  });
+  $('metrics').innerHTML = `
     <div class="metric"><div class="metric-value">${allData.length}</div><div class="metric-label">إجمالي الملفات</div></div>
     <div class="metric"><div class="metric-value" style="color:var(--gold)">${counts.target}</div><div class="metric-label">أهداف مركزية</div></div>
     <div class="metric"><div class="metric-value" style="color:var(--accent)">${counts.ally}</div><div class="metric-label">حلفاء</div></div>
     <div class="metric"><div class="metric-value" style="color:var(--red)">${counts.adversary}</div><div class="metric-label">خصوم</div></div>
-    <div class="metric"><div class="metric-value" style="color:var(--purple)">${counts.telegram}</div><div class="metric-label">دائرة تيليجرام</div></div>
+    <div class="metric"><div class="metric-value" style="color:var(--green)">${counts.family}</div><div class="metric-label">عائلة</div></div>
+    <div class="metric"><div class="metric-value" style="color:var(--purple)">${counts.telegram}</div><div class="metric-label">تيليجرام</div></div>
   `;
 }
 
+/* ===== Filters ===== */
 function renderFilters() {
   const filters = [
     { key: 'all', label: '📁 الكل' },
@@ -644,29 +385,12 @@ function renderFilters() {
     { key: 'family', label: '👨‍👩‍👧 عائلة' },
     { key: 'telegram', label: '💬 تيليجرام' }
   ];
-  document.getElementById('filters').innerHTML = filters.map(f =>
-    `<button class="filter-btn ${f.key === currentFilter ? 'active' : ''}" onclick="setFilter('${f.key}')">${f.label}</button>`
+  $('filters').innerHTML = filters.map(f =>
+    `<button type="button" class="filter-btn ${f.key === currentFilter ? 'active' : ''}" data-filter="${f.key}">${f.label}</button>`
   ).join('');
 }
 
-function setFilter(key) {
-  currentFilter = key;
-  renderFilters();
-  filterData();
-}
-
-function filterData() {
-  const query = document.getElementById('searchInput').value.toLowerCase().trim();
-  let filtered = allData.filter(p => {
-    const matchCat = currentFilter === 'all' || p.category === currentFilter;
-    if (!matchCat) return false;
-    if (!query) return true;
-    const str = `${p.code || ''} ${p.name || ''} ${p.name_ar || ''} ${p.role || ''} ${p.phone || ''} ${p.telegram_id || ''} ${p.email || ''}`.toLowerCase();
-    return str.includes(query);
-  });
-  renderGrid(filtered);
-}
-
+/* ===== Status Badge ===== */
 function statusBadge(status) {
   const map = {
     safe: ['badge-safe', '🟢 آمن'],
@@ -678,174 +402,204 @@ function statusBadge(status) {
   return `<span class="badge ${cls}">${label}</span>`;
 }
 
+/* ===== Render Grid ===== */
 function renderGrid(data) {
-  const grid = document.getElementById('grid');
-  if (data.length === 0) {
+  const grid = $('grid');
+  if (!data.length) {
     grid.innerHTML = '<div class="empty">لا توجد نتائج مطابقة للبحث</div>';
     return;
   }
   grid.innerHTML = data.map(p => {
-    const img = p.image 
-      ? `<img class="card-avatar" src="${p.image}" alt="" onerror="this.outerHTML='<div class=\\'card-avatar\\'>👤</div>'">` 
-      : `<div class="card-avatar">${p.category === 'target' ? '🎯' : p.category === 'adversary' ? '⚠️' : p.category === 'family' ? '👨‍👩‍👧' : p.category === 'telegram' ? '💬' : '👤'}</div>`;
+    let img;
+    if (p.image) {
+      img = `<img class="card-avatar" src="${escapeHTML(p.image)}" alt="" onerror="this.outerHTML='<div class=\\'card-avatar\\'>👤</div>'">`;
+    } else {
+      const emoji = p.category === 'target' ? '🎯' : p.category === 'adversary' ? '⚠️' : p.category === 'family' ? '👨‍👩‍👧' : p.category === 'telegram' ? '💬' : '👤';
+      img = `<div class="card-avatar">${emoji}</div>`;
+    }
     return `
-      <div class="card cat-${p.category || 'ally'}" onclick="openPerson('${p.id}')">
+      <div class="card cat-${escapeHTML(p.category || 'ally')}" data-person-id="${escapeHTML(p.id)}">
         <div class="card-head">
           ${img}
           <div class="card-info">
-            <div class="card-code">${p.code || 'SUBJ-XXX'}</div>
-            <div class="card-name">${p.name || 'بدون اسم'}</div>
-            <div class="card-name-ar">${p.name_ar || ''}</div>
+            <div class="card-code">${escapeHTML(p.code || 'SUBJ-XXX')}</div>
+            <div class="card-name">${escapeHTML(p.name || 'بدون اسم')}</div>
+            <div class="card-name-ar">${escapeHTML(p.name_ar || '')}</div>
           </div>
         </div>
-        <div class="card-role">${(p.role || '').substring(0, 100)}${(p.role || '').length > 100 ? '...' : ''}</div>
+        <div class="card-role">${escapeHTML((p.role || '').substring(0, 100))}${(p.role || '').length > 100 ? '...' : ''}</div>
         ${statusBadge(p.status)}
       </div>
     `;
   }).join('');
 }
 
-// ===== المودال =====
+/* ===== Filter / Search ===== */
+function filterData() {
+  const q = ($('searchInput')?.value || '').toLowerCase().trim();
+  const filtered = allData.filter(p => {
+    const matchCat = currentFilter === 'all' || p.category === currentFilter;
+    if (!matchCat) return false;
+    if (!q) return true;
+    const str = `${p.code || ''} ${p.name || ''} ${p.name_ar || ''} ${p.role || ''} ${p.phone || ''} ${p.telegram_id || ''} ${p.email || ''}`.toLowerCase();
+    return str.includes(q);
+  });
+  renderGrid(filtered);
+}
+
+/* ===== Modal ===== */
 function openPerson(id) {
   const p = allData.find(x => x.id === id);
   if (!p) return;
 
-  document.getElementById('modalTitle').textContent = `${p.code || 'SUBJ'} — ${p.name || ''}`;
+  $('modalTitle').textContent = `${p.code || 'SUBJ'} — ${p.name || ''}`;
 
   const hasSecret = p.secret_notes || p.secret_reports || p.secret_leaks;
-  const secretHtml = hasSecret ? `
-    ${secretUnlocked ? renderSecretContent(p) : `
-      <div class="secret-locked" onclick="openPassScreen()">
-        <div class="secret-locked-icon">🔒</div>
-        <div class="secret-locked-text">بيانات سرية - مطلوب تصريح</div>
-        <div style="color:var(--text-dim); font-size:0.8rem; margin-top:8px;">اضغط للوصول (يحتاج رمز التصريح)</div>
-      </div>
-    `}
-  ` : '';
+  let secretHtml = '';
+  if (hasSecret) {
+    if (secretUnlocked) {
+      secretHtml = `
+        <div class="section" style="border-color:var(--red); background:linear-gradient(135deg, rgba(220,38,38,0.08), transparent);">
+          <h3 style="color:var(--red);">🔓 البيانات السرية - تصريح مؤكد</h3>
+          ${p.secret_notes ? `<div style="margin-bottom:10px;"><div class="info-label">ملاحظات سرية</div><div style="line-height:1.7; font-size:0.9rem; white-space:pre-line;">${escapeHTML(p.secret_notes)}</div></div>` : ''}
+          ${p.secret_reports ? `<div style="margin-bottom:10px;"><div class="info-label">تقارير سرية</div><div style="line-height:1.7; font-size:0.9rem; white-space:pre-line;">${escapeHTML(p.secret_reports)}</div></div>` : ''}
+          ${p.secret_leaks ? `<div><div class="info-label">تسريبات وأدلة</div><div style="line-height:1.7; font-size:0.9rem; white-space:pre-line;">${escapeHTML(p.secret_leaks)}</div></div>` : ''}
+        </div>
+      `;
+    } else {
+      secretHtml = `
+        <div class="secret-locked" data-action="unlock" data-person-id="${escapeHTML(p.id)}">
+          <div class="secret-locked-icon">🔒</div>
+          <div class="secret-locked-text">بيانات سرية - مطلوب تصريح</div>
+          <div style="color:var(--text-dim); font-size:0.8rem; margin-top:8px;">اضغط للوصول (يحتاج رمز التصريح)</div>
+        </div>
+      `;
+    }
+  }
 
-  document.getElementById('modalBody').innerHTML = `
+  $('modalBody').innerHTML = `
     <div class="section">
       <h3>📋 البيانات الأساسية</h3>
       <div class="info-grid">
-        <div class="info-item"><div class="info-label">الكود</div><div class="info-value">${p.code || '-'}</div></div>
-        <div class="info-item"><div class="info-label">الفئة</div><div class="info-value">${p.category || '-'}</div></div>
+        <div class="info-item"><div class="info-label">الكود</div><div class="info-value">${escapeHTML(p.code || '-')}</div></div>
+        <div class="info-item"><div class="info-label">الفئة</div><div class="info-value">${escapeHTML(p.category || '-')}</div></div>
         <div class="info-item"><div class="info-label">الحالة</div><div class="info-value">${statusBadge(p.status)}</div></div>
-        <div class="info-item"><div class="info-label">مستوى التهديد</div><div class="info-value">${p.threat_level || '-'}</div></div>
-        <div class="info-item"><div class="info-label">الدور</div><div class="info-value">${p.role || '-'}</div></div>
+        <div class="info-item"><div class="info-label">مستوى التهديد</div><div class="info-value">${escapeHTML(p.threat_level || '-')}</div></div>
+        <div class="info-item"><div class="info-label">الدور</div><div class="info-value">${escapeHTML(p.role || '-')}</div></div>
       </div>
     </div>
 
     <div class="section">
       <h3>👤 البيانات الشخصية</h3>
       <div class="info-grid">
-        <div class="info-item"><div class="info-label">السن</div><div class="info-value">${p.age || '-'}</div></div>
-        <div class="info-item"><div class="info-label">تاريخ الميلاد</div><div class="info-value">${p.dob || '-'}</div></div>
-        <div class="info-item"><div class="info-label">مكان الميلاد</div><div class="info-value">${p.birthplace || '-'}</div></div>
-        <div class="info-item"><div class="info-label">الجنسية</div><div class="info-value">${p.nationality || '-'}</div></div>
-        <div class="info-item"><div class="info-label">التعليم</div><div class="info-value">${p.education || '-'}</div></div>
-        <div class="info-item"><div class="info-label">الحالة الاجتماعية</div><div class="info-value">${p.marital || '-'}</div></div>
+        <div class="info-item"><div class="info-label">السن</div><div class="info-value">${escapeHTML(p.age || '-')}</div></div>
+        <div class="info-item"><div class="info-label">تاريخ الميلاد</div><div class="info-value">${escapeHTML(p.dob || '-')}</div></div>
+        <div class="info-item"><div class="info-label">مكان الميلاد</div><div class="info-value">${escapeHTML(p.birthplace || '-')}</div></div>
+        <div class="info-item"><div class="info-label">الجنسية</div><div class="info-value">${escapeHTML(p.nationality || '-')}</div></div>
+        <div class="info-item"><div class="info-label">التعليم</div><div class="info-value">${escapeHTML(p.education || '-')}</div></div>
+        <div class="info-item"><div class="info-label">الحالة الاجتماعية</div><div class="info-value">${escapeHTML(p.marital || '-')}</div></div>
       </div>
     </div>
 
     <div class="section">
       <h3>📞 الاتصالات</h3>
       <div class="info-grid">
-        <div class="info-item"><div class="info-label">الهاتف</div><div class="info-value">${p.phone || '-'}</div></div>
-        <div class="info-item"><div class="info-label">المشغل</div><div class="info-value">${p.carrier || '-'}</div></div>
-        <div class="info-item"><div class="info-label">تيليجرام ID</div><div class="info-value">${p.telegram_id || '-'}</div></div>
-        <div class="info-item"><div class="info-label">يوزر تيليجرام</div><div class="info-value">${p.telegram_user || '-'}</div></div>
-        <div class="info-item"><div class="info-label">الإيميل</div><div class="info-value">${p.email || '-'}</div></div>
-        <div class="info-item"><div class="info-label">X / Twitter</div><div class="info-value">${p.twitter || '-'}</div></div>
+        <div class="info-item"><div class="info-label">الهاتف</div><div class="info-value">${escapeHTML(p.phone || '-')}</div></div>
+        <div class="info-item"><div class="info-label">المشغل</div><div class="info-value">${escapeHTML(p.carrier || '-')}</div></div>
+        <div class="info-item"><div class="info-label">تيليجرام ID</div><div class="info-value">${escapeHTML(p.telegram_id || '-')}</div></div>
+        <div class="info-item"><div class="info-label">يوزر تيليجرام</div><div class="info-value">${escapeHTML(p.telegram_user || '-')}</div></div>
+        <div class="info-item"><div class="info-label">الإيميل</div><div class="info-value">${escapeHTML(p.email || '-')}</div></div>
+        <div class="info-item"><div class="info-label">X / Twitter</div><div class="info-value">${escapeHTML(p.twitter || '-')}</div></div>
       </div>
     </div>
 
-    ${p.addresses ? `
-    <div class="section">
-      <h3>📍 السجل الجغرافي</h3>
-      <div class="info-value" style="white-space:pre-line; line-height:1.8;">${p.addresses}</div>
-    </div>` : ''}
+    ${p.addresses ? `<div class="section"><h3>📍 السجل الجغرافي</h3><div class="info-value" style="white-space:pre-line; line-height:1.8;">${escapeHTML(p.addresses)}</div></div>` : ''}
 
-    ${p.psycho_analysis || p.behavior_pattern ? `
+    ${p.psycho_analysis || p.behavior_pattern || p.weaknesses || p.strengths ? `
     <div class="section">
       <h3>🧠 التحليل الاستخباري العام</h3>
-      ${p.psycho_analysis ? `<div style="margin-bottom:10px;"><div class="info-label">تحليل الشخصية</div><div style="line-height:1.7; font-size:0.9rem;">${p.psycho_analysis}</div></div>` : ''}
-      ${p.behavior_pattern ? `<div style="margin-bottom:10px;"><div class="info-label">النمط السلوكي</div><div style="line-height:1.7; font-size:0.9rem;">${p.behavior_pattern}</div></div>` : ''}
-      ${p.weaknesses ? `<div style="margin-bottom:10px;"><div class="info-label">نقاط الضعف</div><div style="line-height:1.7; font-size:0.9rem;">${p.weaknesses}</div></div>` : ''}
-      ${p.strengths ? `<div><div class="info-label">نقاط القوة</div><div style="line-height:1.7; font-size:0.9rem;">${p.strengths}</div></div>` : ''}
+      ${p.psycho_analysis ? `<div style="margin-bottom:10px;"><div class="info-label">تحليل الشخصية</div><div style="line-height:1.7; font-size:0.9rem; white-space:pre-line;">${escapeHTML(p.psycho_analysis)}</div></div>` : ''}
+      ${p.behavior_pattern ? `<div style="margin-bottom:10px;"><div class="info-label">النمط السلوكي</div><div style="line-height:1.7; font-size:0.9rem; white-space:pre-line;">${escapeHTML(p.behavior_pattern)}</div></div>` : ''}
+      ${p.weaknesses ? `<div style="margin-bottom:10px;"><div class="info-label">نقاط الضعف</div><div style="line-height:1.7; font-size:0.9rem; white-space:pre-line;">${escapeHTML(p.weaknesses)}</div></div>` : ''}
+      ${p.strengths ? `<div><div class="info-label">نقاط القوة</div><div style="line-height:1.7; font-size:0.9rem; white-space:pre-line;">${escapeHTML(p.strengths)}</div></div>` : ''}
     </div>` : ''}
 
-    ${p.notes ? `
-    <div class="section">
-      <h3>📝 ملاحظات</h3>
-      <div style="line-height:1.7; font-size:0.9rem;">${p.notes}</div>
-    </div>` : ''}
+    ${p.notes ? `<div class="section"><h3>📝 ملاحظات</h3><div style="line-height:1.7; font-size:0.9rem; white-space:pre-line;">${escapeHTML(p.notes)}</div></div>` : ''}
 
     ${secretHtml}
   `;
 
-  document.getElementById('modal').classList.add('active');
+  $('modal').classList.add('active');
 }
 
-function renderSecretContent(p) {
-  return `
-    <div class="section" style="border-color:var(--red); background:linear-gradient(135deg, rgba(220,38,38,0.08), transparent);">
-      <h3 style="color:var(--red);">🔓 البيانات السرية - تصريح مؤكد</h3>
-      ${p.secret_notes ? `<div style="margin-bottom:10px;"><div class="info-label">ملاحظات سرية</div><div style="line-height:1.7; font-size:0.9rem;">${p.secret_notes}</div></div>` : ''}
-      ${p.secret_reports ? `<div style="margin-bottom:10px;"><div class="info-label">تقارير سرية</div><div style="line-height:1.7; font-size:0.9rem; white-space:pre-line;">${p.secret_reports}</div></div>` : ''}
-      ${p.secret_leaks ? `<div><div class="info-label">تسريبات وأدلة</div><div style="line-height:1.7; font-size:0.9rem; white-space:pre-line;">${p.secret_leaks}</div></div>` : ''}
-    </div>
-  `;
+function closeModal() {
+  $('modal').classList.remove('active');
 }
 
-function closeModal(e) {
-  if (e && e.target.id !== 'modal') return;
-  document.getElementById('modal').classList.remove('active');
-}
-
-// ===== كلمة السر السرية =====
-let pendingUnlockId = null;
-
-function openPassScreen() {
-  const modal = document.getElementById('modal');
-  const personName = document.getElementById('modalTitle').textContent;
-  // نستخرج id من allData بالاسم
-  pendingUnlockId = allData.find(p => 
-    document.getElementById('modalBody').innerHTML.includes(p.code)
-  )?.id;
-  
-  document.getElementById('passInput').value = '';
-  document.getElementById('passError').style.display = 'none';
-  document.getElementById('passOverlay').classList.add('active');
-  setTimeout(() => document.getElementById('passInput').focus(), 100);
+/* ===== Secret Password ===== */
+function openPassScreen(personId) {
+  pendingUnlockId = personId;
+  $('passInput').value = '';
+  $('passError').style.display = 'none';
+  $('passOverlay').classList.add('active');
+  setTimeout(() => $('passInput').focus(), 100);
 }
 
 function checkPassword() {
-  const input = document.getElementById('passInput').value.trim();
+  const input = $('passInput').value.trim();
   if (input === SECRET_PASSWORD) {
     secretUnlocked = true;
-    document.getElementById('passOverlay').classList.remove('active');
-    // نعيد فتح نفس الشخص
+    $('passOverlay').classList.remove('active');
     if (pendingUnlockId) {
-      const p = allData.find(x => x.id === pendingUnlockId);
-      if (p) openPerson(p.id);
+      openPerson(pendingUnlockId);
     }
   } else {
-    document.getElementById('passError').style.display = 'block';
+    $('passError').style.display = 'block';
   }
 }
 
-document.getElementById('passInput').addEventListener('keydown', e => {
+/* ===== Events ===== */
+$('searchInput')?.addEventListener('input', filterData);
+
+$('filters')?.addEventListener('click', e => {
+  const btn = e.target.closest('button[data-filter]');
+  if (!btn) return;
+  currentFilter = btn.dataset.filter;
+  renderFilters();
+  filterData();
+});
+
+$('grid')?.addEventListener('click', e => {
+  const card = e.target.closest('.card[data-person-id]');
+  if (!card) return;
+  openPerson(card.dataset.personId);
+});
+
+$('modalBody')?.addEventListener('click', e => {
+  const lock = e.target.closest('[data-action="unlock"]');
+  if (!lock) return;
+  openPassScreen(lock.dataset.personId);
+});
+
+$('closeModalBtn')?.addEventListener('click', closeModal);
+
+$('modal')?.addEventListener('click', e => {
+  if (e.target === $('modal')) closeModal();
+});
+
+$('passBtn')?.addEventListener('click', checkPassword);
+
+$('passInput')?.addEventListener('keydown', e => {
   if (e.key === 'Enter') checkPassword();
 });
 
-// إغلاق شاشة الباسورد بالضغط بره
-document.getElementById('passOverlay').addEventListener('click', e => {
-  if (e.target.id === 'passOverlay') {
-    document.getElementById('passOverlay').classList.remove('active');
+$('passOverlay')?.addEventListener('click', e => {
+  if (e.target === $('passOverlay')) {
+    $('passOverlay').classList.remove('active');
   }
 });
 
-// ===== بدء التحميل =====
+/* ===== Start ===== */
 loadData();
 </script>
 
