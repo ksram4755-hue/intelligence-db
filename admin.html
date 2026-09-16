@@ -1,0 +1,913 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>لوحة التحكم - ADMIN PANEL</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0a0f1d;
+  --card: #152033;
+  --border: #23334d;
+  --accent: #3b82f6;
+  --gold: #d97706;
+  --red: #dc2626;
+  --green: #059669;
+  --text: #f8fafc;
+  --dim: #94a3b8;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'Cairo', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+}
+
+/* ===== شاشة تسجيل الدخول ===== */
+.login-screen {
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(circle at center, #152033 0%, #050a15 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  z-index: 100;
+}
+.login-screen.hidden { display: none; }
+.login-box {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-top: 4px solid var(--accent);
+  border-radius: 12px;
+  padding: 36px 30px;
+  max-width: 400px;
+  width: 100%;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+}
+.login-box h1 {
+  text-align: center;
+  color: var(--accent);
+  font-size: 1.3rem;
+  margin-bottom: 6px;
+}
+.login-box .sub {
+  text-align: center;
+  color: var(--dim);
+  font-size: 0.75rem;
+  font-family: 'JetBrains Mono', monospace;
+  letter-spacing: 2px;
+  margin-bottom: 24px;
+}
+.login-icon {
+  width: 70px; height: 70px;
+  margin: 0 auto 20px;
+  background: linear-gradient(135deg, var(--accent), #7c3aed);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  box-shadow: 0 0 30px rgba(59,130,246,0.5);
+}
+.field { margin-bottom: 14px; }
+.field label {
+  display: block;
+  font-size: 0.8rem;
+  color: var(--dim);
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+.field input, .field select, .field textarea {
+  width: 100%;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 11px 14px;
+  color: #fff;
+  font-family: inherit;
+  font-size: 0.9rem;
+}
+.field input:focus, .field select:focus, .field textarea:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(59,130,246,0.15);
+}
+.field textarea { resize: vertical; min-height: 70px; }
+
+.btn {
+  width: 100%;
+  padding: 13px;
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-family: inherit;
+  font-weight: 800;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.btn:hover { background: #2563eb; transform: translateY(-1px); }
+.btn-red { background: var(--red); }
+.btn-red:hover { background: #b91c1c; }
+.btn-green { background: var(--green); }
+.btn-green:hover { background: #047857; }
+.btn-gray { background: var(--border); }
+.btn-gray:hover { background: #334155; }
+
+.error-msg {
+  background: rgba(220,38,38,0.15);
+  border: 1px solid var(--red);
+  color: #fca5a5;
+  padding: 10px;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  margin-top: 12px;
+  display: none;
+}
+
+/* ===== لوحة التحكم ===== */
+.admin-panel { display: none; }
+.admin-panel.active { display: block; }
+
+.topbar {
+  background: var(--card);
+  border-bottom: 1px solid var(--border);
+  padding: 14px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+.topbar-title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-weight: 800;
+  color: #fff;
+  font-size: 1rem;
+}
+.topbar-title .dot {
+  width: 10px; height: 10px;
+  background: var(--green);
+  border-radius: 50%;
+  box-shadow: 0 0 10px var(--green);
+}
+.topbar-user {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.8rem;
+  color: var(--dim);
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 10px;
+  margin-bottom: 20px;
+}
+.stat {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 14px;
+  text-align: center;
+}
+.stat-value {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--accent);
+  font-family: 'JetBrains Mono', monospace;
+}
+.stat-label {
+  font-size: 0.72rem;
+  color: var(--dim);
+  font-weight: 700;
+}
+
+.actions {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+.actions .btn {
+  width: auto;
+  padding: 11px 20px;
+  font-size: 0.88rem;
+}
+
+.search-bar {
+  width: 100%;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 12px 16px;
+  color: #fff;
+  font-family: inherit;
+  margin-bottom: 20px;
+  font-size: 0.9rem;
+}
+.search-bar:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+
+/* جدول */
+.table-wrap {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  overflow: hidden;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.85rem;
+}
+th {
+  background: var(--bg);
+  color: var(--dim);
+  text-align: right;
+  padding: 12px 14px;
+  font-weight: 800;
+  border-bottom: 1px solid var(--border);
+  font-size: 0.8rem;
+}
+td {
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--border);
+  color: #fff;
+}
+tr:last-child td { border-bottom: none; }
+tr:hover td { background: rgba(59,130,246,0.05); }
+
+.row-actions {
+  display: flex;
+  gap: 6px;
+}
+.btn-mini {
+  padding: 5px 10px;
+  border-radius: 5px;
+  border: 1px solid;
+  background: transparent;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 0.75rem;
+  font-weight: 700;
+  transition: all 0.2s;
+}
+.btn-edit { color: var(--accent); border-color: var(--accent); }
+.btn-edit:hover { background: var(--accent); color: #fff; }
+.btn-del { color: var(--red); border-color: var(--red); }
+.btn-del:hover { background: var(--red); color: #fff; }
+
+/* مودال الفورم */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.85);
+  backdrop-filter: blur(6px);
+  z-index: 200;
+  display: none;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 20px;
+  overflow-y: auto;
+}
+.modal-overlay.active { display: flex; }
+.modal {
+  background: var(--card);
+  border: 1px solid var(--accent);
+  border-top: 4px solid var(--accent);
+  border-radius: 12px;
+  max-width: 720px;
+  width: 100%;
+  margin: 20px 0;
+}
+.modal-header {
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  background: var(--card);
+  z-index: 2;
+  border-radius: 12px 12px 0 0;
+}
+.modal-header h2 { font-size: 1.1rem; color: #fff; }
+.close-btn {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text);
+  width: 32px; height: 32px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 1rem;
+}
+.close-btn:hover { background: var(--red); border-color: var(--red); }
+.modal-body { padding: 20px; }
+
+.form-section {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 14px;
+}
+.form-section h3 {
+  color: var(--accent);
+  font-size: 0.9rem;
+  margin-bottom: 12px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--border);
+}
+.form-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 12px;
+  margin-bottom: 12px;
+}
+.form-row:last-child { margin-bottom: 0; }
+
+.toast {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--card);
+  border: 1px solid var(--green);
+  color: #fff;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-weight: 700;
+  z-index: 9999;
+  display: none;
+}
+.toast.error { border-color: var(--red); }
+
+.empty-row {
+  text-align: center;
+  padding: 40px;
+  color: var(--dim);
+}
+
+@media (max-width: 700px) {
+  table { font-size: 0.78rem; }
+  th, td { padding: 8px 10px; }
+  .stat-value { font-size: 1.2rem; }
+}
+</style>
+</head>
+<body>
+
+<!-- ===== شاشة تسجيل الدخول ===== -->
+<div class="login-screen" id="loginScreen">
+  <div class="login-box">
+    <div class="login-icon">🔐</div>
+    <h1>لوحة التحكم</h1>
+    <div class="sub">ADMIN ACCESS ONLY</div>
+    <div class="field">
+      <label>البريد الإلكتروني</label>
+      <input type="email" id="loginEmail" placeholder="admin@example.com" autocomplete="username">
+    </div>
+    <div class="field">
+      <label>كلمة المرور</label>
+      <input type="password" id="loginPass" placeholder="••••••••" autocomplete="current-password">
+    </div>
+    <button class="btn" onclick="doLogin()">🔓 تسجيل الدخول</button>
+    <div class="error-msg" id="loginError"></div>
+  </div>
+</div>
+
+<!-- ===== لوحة التحكم ===== -->
+<div class="admin-panel" id="adminPanel">
+  <div class="topbar">
+    <div class="topbar-title">
+      <span class="dot"></span>
+      <span>🛡️ لوحة تحكم قاعدة البيانات</span>
+    </div>
+    <div style="display:flex; align-items:center; gap:12px; flex-wrap:wrap;">
+      <span class="topbar-user" id="userEmail"></span>
+      <button class="btn btn-red" style="width:auto; padding:8px 16px; font-size:0.82rem;" onclick="doLogout()">خروج</button>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="stats" id="stats"></div>
+
+    <div class="actions">
+      <button class="btn btn-green" onclick="openForm()">➕ إضافة شخص جديد</button>
+      <button class="btn btn-gray" onclick="loadPersons()">🔄 تحديث القائمة</button>
+    </div>
+
+    <input type="text" class="search-bar" id="adminSearch" placeholder="🔍 ابحث عن شخص بالاسم أو الكود..." oninput="renderTable()">
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>الكود</th>
+            <th>الاسم</th>
+            <th>الفئة</th>
+            <th>الحالة</th>
+            <th>إجراءات</th>
+          </tr>
+        </thead>
+        <tbody id="tableBody"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ===== مودال الفورم ===== -->
+<div class="modal-overlay" id="formModal">
+  <div class="modal">
+    <div class="modal-header">
+      <h2 id="formTitle">➕ إضافة شخص جديد</h2>
+      <button class="close-btn" onclick="closeForm()">✕</button>
+    </div>
+    <div class="modal-body">
+      <input type="hidden" id="editId">
+
+      <div class="form-section">
+        <h3>📋 البيانات الأساسية</h3>
+        <div class="form-row">
+          <div class="field">
+            <label>الكود (اتركه فارغ للتوليد التلقائي)</label>
+            <input type="text" id="f_code" placeholder="SUBJ-001">
+          </div>
+          <div class="field">
+            <label>الفئة</label>
+            <select id="f_category">
+              <option value="target">🎯 هدف مركزي</option>
+              <option value="ally">🤝 حليف</option>
+              <option value="adversary">⚠️ خصم</option>
+              <option value="family">👨‍👩‍👧 عائلة</option>
+              <option value="telegram">💬 تيليجرام</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="field">
+            <label>الاسم</label>
+            <input type="text" id="f_name" placeholder="اسم كودي أو لقب">
+          </div>
+          <div class="field">
+            <label>الاسم بالعربي</label>
+            <input type="text" id="f_name_ar" placeholder="الاسم بالعربي">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="field">
+            <label>الحالة</label>
+            <select id="f_status">
+              <option value="safe">🟢 آمن</option>
+              <option value="watch">🟡 تحت المراقبة</option>
+              <option value="danger">🔴 خطر</option>
+              <option value="missing">⚫ مفقود</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>مستوى التهديد</label>
+            <input type="text" id="f_threat_level" placeholder="منخفض / متوسط / مرتفع / حرج">
+          </div>
+        </div>
+        <div class="field">
+          <label>الدور / الصفة</label>
+          <input type="text" id="f_role" placeholder="الدور أو الصفة">
+        </div>
+      </div>
+
+      <div class="form-section">
+        <h3>👤 البيانات الشخصية</h3>
+        <div class="form-row">
+          <div class="field">
+            <label>السن</label>
+            <input type="number" id="f_age" placeholder="30">
+          </div>
+          <div class="field">
+            <label>تاريخ الميلاد</label>
+            <input type="text" id="f_dob" placeholder="1994-01-01">
+          </div>
+          <div class="field">
+            <label>مكان الميلاد</label>
+            <input type="text" id="f_birthplace" placeholder="المدينة، الدولة">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="field">
+            <label>الجنسية</label>
+            <input type="text" id="f_nationality" placeholder="مصر / أمريكا">
+          </div>
+          <div class="field">
+            <label>التعليم</label>
+            <input type="text" id="f_education" placeholder="المؤهل">
+          </div>
+          <div class="field">
+            <label>الحالة الاجتماعية</label>
+            <input type="text" id="f_marital" placeholder="أعزب / متزوج">
+          </div>
+        </div>
+      </div>
+
+      <div class="form-section">
+        <h3>📸 الصورة</h3>
+        <div class="field">
+          <label>رابط الصورة (من imgbb.com)</label>
+          <input type="text" id="f_image" placeholder="https://i.ibb.co/...">
+        </div>
+      </div>
+
+      <div class="form-section">
+        <h3>📞 الاتصالات</h3>
+        <div class="form-row">
+          <div class="field">
+            <label>رقم الهاتف</label>
+            <input type="text" id="f_phone" placeholder="+20 XXX XXX XXXX">
+          </div>
+          <div class="field">
+            <label>المشغل</label>
+            <input type="text" id="f_carrier" placeholder="Vodafone / AT&T">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="field">
+            <label>تيليجرام ID</label>
+            <input type="text" id="f_telegram_id" placeholder="123456789">
+          </div>
+          <div class="field">
+            <label>يوزر تيليجرام</label>
+            <input type="text" id="f_telegram_user" placeholder="@username">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="field">
+            <label>البريد الإلكتروني</label>
+            <input type="email" id="f_email" placeholder="test@example.com">
+          </div>
+          <div class="field">
+            <label>X / Twitter</label>
+            <input type="text" id="f_twitter" placeholder="@username">
+          </div>
+        </div>
+      </div>
+
+      <div class="form-section">
+        <h3>📍 السجل الجغرافي</h3>
+        <div class="field">
+          <label>العناوين (كل عنوان في سطر)</label>
+          <textarea id="f_addresses" placeholder="العنوان الأول&#10;العنوان الثاني"></textarea>
+        </div>
+      </div>
+
+      <div class="form-section">
+        <h3>🧠 التحليل الاستخباري</h3>
+        <div class="field">
+          <label>تحليل الشخصية</label>
+          <textarea id="f_psycho_analysis" placeholder="وصف الشخصية..."></textarea>
+        </div>
+        <div class="field">
+          <label>النمط السلوكي</label>
+          <textarea id="f_behavior_pattern" placeholder="السلوك المعتاد..."></textarea>
+        </div>
+        <div class="form-row">
+          <div class="field">
+            <label>نقاط الضعف</label>
+            <textarea id="f_weaknesses" placeholder="نقاط الضعف..."></textarea>
+          </div>
+          <div class="field">
+            <label>نقاط القوة</label>
+            <textarea id="f_strengths" placeholder="نقاط القوة..."></textarea>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-section">
+        <h3>📝 ملاحظات</h3>
+        <div class="field">
+          <label>ملاحظات عامة</label>
+          <textarea id="f_notes" placeholder="ملاحظات..."></textarea>
+        </div>
+      </div>
+
+      <div class="form-section" style="border-color:var(--red);">
+        <h3 style="color:var(--red);">🔒 البيانات السرية (محمية بكلمة سر)</h3>
+        <div class="field">
+          <label>ملاحظات سرية</label>
+          <textarea id="f_secret_notes" placeholder="ملاحظات لا تظهر إلا بكلمة السر..."></textarea>
+        </div>
+        <div class="field">
+          <label>تقارير سرية</label>
+          <textarea id="f_secret_reports" placeholder="تقارير حساسة..."></textarea>
+        </div>
+        <div class="field">
+          <label>تسريبات وأدلة</label>
+          <textarea id="f_secret_leaks" placeholder="تسريبات، كلمات مرور، أدلة..."></textarea>
+        </div>
+      </div>
+
+      <button class="btn btn-green" onclick="savePerson()" style="margin-top:10px;">
+        💾 حفظ
+      </button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast">✓ تم بنجاح</div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
+import { 
+  getFirestore, collection, getDocs, doc, setDoc, deleteDoc, addDoc, serverTimestamp 
+} from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
+import { 
+  getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged 
+} from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyDM0kNaNhlmqWuzgl8S6ZEKYsIygPblEB0",
+  authDomain: "intelligence-db.firebaseapp.com",
+  projectId: "intelligence-db",
+  storageBucket: "intelligence-db.firebasestorage.app",
+  messagingSenderId: "522063872850",
+  appId: "1:522063872850:web:aea535752f5838a46db08b"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+const auth = getAuth(app);
+
+let allPersons = [];
+
+// ===== المصادقة =====
+onAuthStateChanged(auth, user => {
+  if (user) {
+    document.getElementById('loginScreen').classList.add('hidden');
+    document.getElementById('adminPanel').classList.add('active');
+    document.getElementById('userEmail').textContent = user.email;
+    loadPersons();
+  } else {
+    document.getElementById('loginScreen').classList.remove('hidden');
+    document.getElementById('adminPanel').classList.remove('active');
+  }
+});
+
+async function doLogin() {
+  const email = document.getElementById('loginEmail').value.trim();
+  const pass = document.getElementById('loginPass').value;
+  const errBox = document.getElementById('loginError');
+  errBox.style.display = 'none';
+
+  if (!email || !pass) {
+    errBox.textContent = '⚠️ املأ كل الحقول';
+    errBox.style.display = 'block';
+    return;
+  }
+
+  try {
+    await signInWithEmailAndPassword(auth, email, pass);
+  } catch (e) {
+    console.error(e);
+    let msg = 'خطأ في تسجيل الدخول';
+    if (e.code === 'auth/invalid-credential' || e.code === 'auth/wrong-password' || e.code === 'auth/user-not-found') {
+      msg = '⚠️ البريد أو كلمة المرور غير صحيحة';
+    } else if (e.code === 'auth/too-many-requests') {
+      msg = '⚠️ محاولات كثيرة، حاول لاحقًا';
+    }
+    errBox.textContent = msg;
+    errBox.style.display = 'block';
+  }
+}
+
+async function doLogout() {
+  if (!confirm('هل تريد تسجيل الخروج؟')) return;
+  await signOut(auth);
+}
+
+document.getElementById('loginPass').addEventListener('keydown', e => {
+  if (e.key === 'Enter') doLogin();
+});
+
+// ===== تحميل البيانات =====
+async function loadPersons() {
+  try {
+    const snap = await getDocs(collection(db, "persons"));
+    allPersons = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+    allPersons.sort((a, b) => (a.code || '').localeCompare(b.code || ''));
+    renderStats();
+    renderTable();
+  } catch (e) {
+    console.error(e);
+    toast('❌ خطأ في تحميل البيانات: ' + e.message, true);
+  }
+}
+
+function renderStats() {
+  const counts = { target: 0, ally: 0, adversary: 0, family: 0, telegram: 0 };
+  allPersons.forEach(p => counts[p.category] = (counts[p.category] || 0) + 1);
+  document.getElementById('stats').innerHTML = `
+    <div class="stat"><div class="stat-value">${allPersons.length}</div><div class="stat-label">إجمالي</div></div>
+    <div class="stat"><div class="stat-value" style="color:var(--gold)">${counts.target}</div><div class="stat-label">أهداف</div></div>
+    <div class="stat"><div class="stat-value">${counts.ally}</div><div class="stat-label">حلفاء</div></div>
+    <div class="stat"><div class="stat-value" style="color:var(--red)">${counts.adversary}</div><div class="stat-label">خصوم</div></div>
+    <div class="stat"><div class="stat-value" style="color:#7c3aed">${counts.telegram}</div><div class="stat-label">تيليجرام</div></div>
+  `;
+}
+
+function categoryLabel(cat) {
+  return { target: '🎯 هدف', ally: '🤝 حليف', adversary: '⚠️ خصم', family: '👨‍👩‍👧 عائلة', telegram: '💬 تيليجرام' }[cat] || cat;
+}
+function statusLabel(s) {
+  return { safe: '🟢 آمن', watch: '🟡 مراقبة', danger: '🔴 خطر', missing: '⚫ مفقود' }[s] || s;
+}
+
+function renderTable() {
+  const q = document.getElementById('adminSearch').value.toLowerCase().trim();
+  const filtered = allPersons.filter(p =>
+    !q || `${p.code || ''} ${p.name || ''} ${p.name_ar || ''}`.toLowerCase().includes(q)
+  );
+  const body = document.getElementById('tableBody');
+  if (filtered.length === 0) {
+    body.innerHTML = '<tr><td colspan="5" class="empty-row">لا توجد نتائج</td></tr>';
+    return;
+  }
+  body.innerHTML = filtered.map(p => `
+    <tr>
+      <td><span style="font-family:'JetBrains Mono',monospace; color:var(--accent);">${p.code || '-'}</span></td>
+      <td><strong>${p.name || '-'}</strong><br><span style="color:var(--dim); font-size:0.75rem;">${p.name_ar || ''}</span></td>
+      <td>${categoryLabel(p.category)}</td>
+      <td>${statusLabel(p.status)}</td>
+      <td>
+        <div class="row-actions">
+          <button class="btn-mini btn-edit" onclick="editPerson('${p.id}')">✏️ تعديل</button>
+          <button class="btn-mini btn-del" onclick="deletePerson('${p.id}')">🗑️ حذف</button>
+        </div>
+      </td>
+    </tr>
+  `).join('');
+}
+
+// ===== الفورم =====
+function openForm(person = null) {
+  const f = (id) => document.getElementById(id);
+  
+  if (person) {
+    document.getElementById('formTitle').textContent = '✏️ تعديل: ' + (person.name || '');
+    f('editId').value = person.id;
+    f('f_code').value = person.code || '';
+    f('f_category').value = person.category || 'ally';
+    f('f_name').value = person.name || '';
+    f('f_name_ar').value = person.name_ar || '';
+    f('f_status').value = person.status || 'safe';
+    f('f_threat_level').value = person.threat_level || '';
+    f('f_role').value = person.role || '';
+    f('f_age').value = person.age || '';
+    f('f_dob').value = person.dob || '';
+    f('f_birthplace').value = person.birthplace || '';
+    f('f_nationality').value = person.nationality || '';
+    f('f_education').value = person.education || '';
+    f('f_marital').value = person.marital || '';
+    f('f_image').value = person.image || '';
+    f('f_phone').value = person.phone || '';
+    f('f_carrier').value = person.carrier || '';
+    f('f_telegram_id').value = person.telegram_id || '';
+    f('f_telegram_user').value = person.telegram_user || '';
+    f('f_email').value = person.email || '';
+    f('f_twitter').value = person.twitter || '';
+    f('f_addresses').value = person.addresses || '';
+    f('f_psycho_analysis').value = person.psycho_analysis || '';
+    f('f_behavior_pattern').value = person.behavior_pattern || '';
+    f('f_weaknesses').value = person.weaknesses || '';
+    f('f_strengths').value = person.strengths || '';
+    f('f_notes').value = person.notes || '';
+    f('f_secret_notes').value = person.secret_notes || '';
+    f('f_secret_reports').value = person.secret_reports || '';
+    f('f_secret_leaks').value = person.secret_leaks || '';
+  } else {
+    document.getElementById('formTitle').textContent = '➕ إضافة شخص جديد';
+    document.querySelectorAll('.modal-body input, .modal-body textarea, .modal-body select').forEach(el => {
+      if (el.type === 'hidden') el.value = '';
+      else if (el.tagName === 'SELECT') el.selectedIndex = 0;
+      else el.value = '';
+    });
+  }
+
+  document.getElementById('formModal').classList.add('active');
+}
+
+function closeForm() {
+  document.getElementById('formModal').classList.remove('active');
+}
+
+function editPerson(id) {
+  const p = allPersons.find(x => x.id === id);
+  if (p) openForm(p);
+}
+
+function getFormData() {
+  const f = (id) => document.getElementById(id).value.trim();
+  return {
+    code: f('f_code'),
+    category: f('f_category'),
+    name: f('f_name'),
+    name_ar: f('f_name_ar'),
+    status: f('f_status'),
+    threat_level: f('f_threat_level'),
+    role: f('f_role'),
+    age: f('f_age'),
+    dob: f('f_dob'),
+    birthplace: f('f_birthplace'),
+    nationality: f('f_nationality'),
+    education: f('f_education'),
+    marital: f('f_marital'),
+    image: f('f_image'),
+    phone: f('f_phone'),
+    carrier: f('f_carrier'),
+    telegram_id: f('f_telegram_id'),
+    telegram_user: f('f_telegram_user'),
+    email: f('f_email'),
+    twitter: f('f_twitter'),
+    addresses: f('f_addresses'),
+    psycho_analysis: f('f_psycho_analysis'),
+    behavior_pattern: f('f_behavior_pattern'),
+    weaknesses: f('f_weaknesses'),
+    strengths: f('f_strengths'),
+    notes: f('f_notes'),
+    secret_notes: f('f_secret_notes'),
+    secret_reports: f('f_secret_reports'),
+    secret_leaks: f('f_secret_leaks'),
+    updatedAt: serverTimestamp()
+  };
+}
+
+async function savePerson() {
+  const data = getFormData();
+  if (!data.name) {
+    toast('⚠️ الاسم مطلوب', true);
+    return;
+  }
+
+  // توليد كود تلقائي لو فاضي
+  if (!data.code) {
+    const nums = allPersons.map(p => parseInt((p.code || '').replace(/\D/g, '')) || 0);
+    const next = (Math.max(0, ...nums) + 1).toString().padStart(3, '0');
+    data.code = 'SUBJ-' + next;
+  }
+
+  const editId = document.getElementById('editId').value;
+
+  try {
+    if (editId) {
+      await setDoc(doc(db, "persons", editId), data, { merge: true });
+      toast('✓ تم التعديل بنجاح');
+    } else {
+      data.createdAt = serverTimestamp();
+      await addDoc(collection(db, "persons"), data);
+      toast('✓ تمت الإضافة بنجاح');
+    }
+    closeForm();
+    await loadPersons();
+  } catch (e) {
+    console.error(e);
+    toast('❌ خطأ في الحفظ: ' + e.message, true);
+  }
+}
+
+async function deletePerson(id) {
+  const p = allPersons.find(x => x.id === id);
+  if (!confirm(`⚠️ هل أنت متأكد من حذف "${p?.name || ''}"؟\n\nلا يمكن التراجع!`)) return;
+  try {
+    await deleteDoc(doc(db, "persons", id));
+    toast('✓ تم الحذف');
+    await loadPersons();
+  } catch (e) {
+    toast('❌ خطأ في الحذف: ' + e.message, true);
+  }
+}
+
+function toast(msg, isError = false) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.toggle('error', isError);
+  t.style.display = 'block';
+  setTimeout(() => t.style.display = 'none', 3000);
+}
+</script>
+
+</body>
+</html>
